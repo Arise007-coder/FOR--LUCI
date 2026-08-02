@@ -167,7 +167,7 @@ function triggerGrandCelebration() {
     }
 }
 
-// Video setup
+// Video Setup
 function initVideoControls() {
     const specialVideo = document.getElementById('specialVideo');
     const videoFinishMsg = document.getElementById('videoFinishMsg');
