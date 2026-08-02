@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>✨ A Little Surprise for luci ✨</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+
+    <canvas id="bgCanvas"></canvas>
+
+    <button id="musicToggle" class="floating-btn" onclick="toggleMusic()">🎵</button>
+    <audio id="bgMusic" loop src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=sweet-piano-112179.mp3"></audio>
+
+    <div id="loadingScreen" class="screen active">
+        <div class="loader-card glass">
+            <div class="sparkle">✨</div>
+            <h2>Preparing a little surprise...</h2>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </div>
+    </div>
+
+    <main id="appContainer" class="hidden">
+
+        <section class="step-card glass active" id="step1">
+            <div class="character-box">🧸</div>
+            <h1 class="typewriter" id="type1"></h1>
+            <button class="btn-primary" onclick="nextStep(2)">✨ Continue</button>
+        </section>
+
+        <section class="step-card glass" id="step2">
+            <div class="envelope-wrapper" onclick="openEnvelope()">
+                <div class="envelope" id="envelope">
+                    <div class="front flap"></div>
+                    <div class="front pocket"></div>
+                    <div class="letter-preview">💌</div>
+                </div>
+            </div>
+            <p class="subtitle">I wrote something for you... Would you like to read it?</p>
+            <button class="btn-primary" id="openEnvBtn" onclick="openEnvelope()">💌 Open Letter</button>
+        </section>
+
+        <section class="step-card glass" id="step3">
+            <div class="letter-content">
+                <p id="type3"></p>
+            </div>
+            <button class="btn-primary" onclick="nextStep(4)">Next ➜</button>
+        </section>
+
+        <section class="step-card glass" id="step4">
+            <h2>Did this surprise make you smile?</h2>
+            <div class="button-group">
+                <button class="btn-option" onclick="triggerConfetti(); nextStep(5)">😊 Yes</button>
+                <button class="btn-option" onclick="triggerConfetti(); nextStep(5)">🤭 A little</button>
+                <button class="btn-option" onclick="triggerConfetti(); nextStep(5)">😂 It's cute</button>
+            </div>
+        </section>
+
+        <section class="step-card glass" id="step5">
+            <h2>What was your first impression?</h2>
+            <div class="button-group">
+                <button class="btn-option" onclick="nextStep(6)">😊 Kind</button>
+                <button class="btn-option" onclick="nextStep(6)">😂 Funny</button>
+                <button class="btn-option" onclick="nextStep(6)">🤔 Still deciding</button>
+            </div>
+        </section>
+
+        <section class="step-card glass" id="step6">
+            <h2>Would you like to get to know each other better?</h2>
+            <div class="button-group">
+                <button class="btn-primary" onclick="nextStep(7)">❤️ Sure</button>
+                <button class="btn-primary" onclick="nextStep(7)">😊 Why not</button>
+            </div>
+        </section>
+
+        <section class="step-card glass" id="step7">
+            <h2>One more surprise?</h2>
+            <div class="button-group flex-row">
+                <button class="btn-primary" onclick="nextStep(8)">YES ❤️</button>
+                <button class="btn-secondary" id="shyBtn" onmouseover="dodgeBtn()" onclick="dodgeBtn()">NO 😜</button>
+            </div>
+            <p id="funnyPopup" class="popup-text hidden">Oops... That button is shy. 😂</p>
+        </section>
+
+        <section class="step-card glass" id="step8">
+            <div class="big-emoji">💐</div>
+            <p>If I could... I'd send these flowers to you.</p>
+            <button class="btn-primary" onclick="nextStep(9)">✨ Next</button>
+        </section>
+
+        <section class="step-card glass" id="step9">
+            <div class="big-emoji">🍫</div>
+            <p>And maybe... Some chocolates too.<br><br>Because every smile deserves something sweet.</p>
+            <button class="btn-primary" onclick="nextStep(10)">✨ Next</button>
+        </section>
+
+        <section class="step-card glass" id="step10">
+            <div class="big-emoji wave-anim">🧸</div>
+            <div class="speech-bubble">I hope you're having a wonderful day.</div>
+            <button class="btn-primary" onclick="nextStep(11)">✨ Next</button>
+        </section>
+
+        <section class="step-card glass" id="step11">
+            <div class="garden-transform">🌸 🦋 ✨ 🌙 🦋 🌸</div>
+            <h2>Welcome to the Magical Garden</h2>
+            <button class="btn-primary" onclick="nextStep(12)">✨ Read Message</button>
+        </section>
+
+        <section class="step-card glass" id="step12">
+            <p class="align-left">
+                Actually... We don't know each other very well yet.<br><br>
+                But you seem kind. Interesting.<br><br>
+                And someone I'd genuinely enjoy getting to know better.<br><br>
+                No pressure. Just one conversation at a time. 🌸
+            </p>
+            <button class="btn-primary" onclick="nextStep(13)">Next ➜</button>
+        </section>
+
+        <section class="step-card glass" id="step13">
+            <h2>Would you like to keep talking sometime? 😊</h2>
+            <div class="button-group">
+                <button class="btn-primary" onclick="nextStep(14)">❤️ I'd like that</button>
+                <button class="btn-secondary" onclick="showMaybeMessage()">🌸 Maybe</button>
+            </div>
+            <p id="maybeMsg" class="popup-text hidden">No worries. Good things take time. 😊</p>
+        </section>
+
+        <section class="step-card glass" id="step14">
+            <h2>🎉 ✨ 🎉</h2>
+            <p>Yay! Thank you for walking through this surprise!</p>
+            <button class="btn-primary" onclick="triggerGrandCelebration(); nextStep(15)">✨ View Final Letter</button>
+        </section>
+
+        <section class="step-card glass" id="step15">
+            <div class="letter-content">
+                <p>
+                    Thank you for spending a few minutes with this little surprise.<br><br>
+                    <strong>Aku senang bisa kenal kamu.</strong><br><br>
+                    Whether we become good friends or simply have a nice conversation, I'm really glad our paths crossed.<br><br>
+                    I hope this little surprise brought a smile to your face.<br><br>
+                    Take care. Stay happy. Stay amazing.<br><br>
+                    <strong>Terima kasih. ❤️🌸</strong>
+                </p>
+            </div>
+            <button class="btn-primary" onclick="nextStep(16)">🎥 One Last Thing...</button>
+        </section>
+
+        <section class="step-card glass" id="step16">
+            <h2>🎥 One Last Thing...</h2>
+            <p>I saved something special for the end. I hope you enjoy this little video.</p>
+            
+            <div class="video-container">
+                <video id="specialVideo" controls playsinline muted preload="auto" poster="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80" style="width: 100%; height: auto; max-height: 350px; border-radius: 12px; display: block;">
+                    <source src="https://files.catbox.moe/gyq34t.mp4" type="video/mp4">
+                    Your browser does not support video playback.
+                </video>
+            </div>
+
+            <div id="videoFinishMsg" style="margin-top: 15px;">
+                <p>Thank you for watching.<br><strong>Semoga harimu menyenangkan. ❤️🌸</strong></p>
+                <button class="btn-primary" onclick="nextStep(17)">✨ Final Screen</button>
+            </div>
+        </section>
+
+        <section class="step-card glass" id="step17">
+            <div class="big-emoji wave-anim">🧸</div>
+            <h2>Semoga harimu menyenangkan!</h2>
+            <p>🌸 ✨ 🦋 ✨ 🌸</p>
+            <a href="https://instagram.com/mr_sta.01" target="_blank" class="btn-instagram">
+                💌 Continue Chatting on Instagram
+            </a>
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
