@@ -1,5 +1,7 @@
+// Global State Tracking
 let currentStep = 1;
 
+// Loading Bar Simulation & Page Initialization
 window.addEventListener('DOMContentLoaded', () => {
     let progress = 0;
     const fill = document.getElementById('progressFill');
@@ -20,6 +22,7 @@ window.addEventListener('DOMContentLoaded', () => {
     initVideoControls();
 });
 
+// Step Transition Engine
 function nextStep(stepNumber) {
     const activeCard = document.querySelector('.step-card.active');
     if (activeCard) activeCard.classList.remove('active');
@@ -30,11 +33,13 @@ function nextStep(stepNumber) {
         currentStep = stepNumber;
     }
 
+    // Trigger Typewriters on relevant steps
     if (stepNumber === 3) {
-        startTypewriter('type3', "Hi luci 😊\n\nAku cuma mau bilang...\n\nThank you for taking a little time to visit this page.\n\nMaybe this is unexpected...\n\nBut I thought it would be more fun than sending just another message.\n\nI hope this little surprise makes you smile. 🌸");
+        startTypewriter('type3', "Hi luci 😊\n\nI just wanted to say...\n\nThank you for taking a little time to visit this page.\n\nMaybe this is unexpected...\n\nBut I thought it would be more fun than sending just another message.\n\nI hope this little surprise makes you smile. 🌸");
     }
 }
 
+// Typewriter Effect Logic
 function startTypewriter(elementId, text) {
     const el = document.getElementById(elementId);
     if (!el) return;
@@ -56,6 +61,7 @@ function startTypewriter(elementId, text) {
     type();
 }
 
+// Audio Control Logic
 function toggleMusic() {
     const audio = document.getElementById('bgMusic');
     const btn = document.getElementById('musicToggle');
@@ -68,11 +74,13 @@ function toggleMusic() {
     }
 }
 
+// Envelope Interaction
 function openEnvelope() {
     triggerConfetti();
     nextStep(3);
 }
 
+// Playful Dodging Button Mechanics
 function dodgeBtn() {
     const btn = document.getElementById('shyBtn');
     const popup = document.getElementById('funnyPopup');
@@ -84,6 +92,7 @@ function dodgeBtn() {
     if (btn) btn.style.transform = `translate(${randomX}px, ${randomY}px)`;
 }
 
+// Maybe Button Branching
 function showMaybeMessage() {
     const msg = document.getElementById('maybeMsg');
     if (msg) msg.classList.remove('hidden');
@@ -92,6 +101,7 @@ function showMaybeMessage() {
     }, 2000);
 }
 
+// Canvas Visual Particle System
 function initBackgroundCanvas() {
     const canvas = document.getElementById('bgCanvas');
     if (!canvas) return;
@@ -136,6 +146,7 @@ function initBackgroundCanvas() {
     animate();
 }
 
+// Confetti Utility Integration
 function triggerConfetti() {
     if (typeof confetti === 'function') {
         confetti({
@@ -156,6 +167,7 @@ function triggerGrandCelebration() {
     }
 }
 
+// Video setup
 function initVideoControls() {
     const specialVideo = document.getElementById('specialVideo');
     const videoFinishMsg = document.getElementById('videoFinishMsg');
